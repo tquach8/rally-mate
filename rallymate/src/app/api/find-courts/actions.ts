@@ -6,7 +6,7 @@ import { Court } from '@/app/lib/definitions';
 
 const client = await db.connect();
 
-export async function getMapMarkers() {
+export async function getMapMarkers(): Promise<Court[]> {
   const result = await client.sql`
     SELECT
       id,
