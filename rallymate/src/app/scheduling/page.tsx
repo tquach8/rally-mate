@@ -8,15 +8,40 @@ export default function SchedulingPage() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [availability, setAvailability] = useState<Date[]>([]);
 
-  const handleConfirm = () => {
+  const userId = "your-user-id"; // Replace with the actual user ID, possibly from user context/auth
+
+  const handleConfirm = async () => {
     if (startDate) {
-      setAvailability((prev) => [...prev, startDate]);
-      setStartDate(null); // Clear the date picker after confirming
+      // Send the selected date to the backend
+      try {
+        const response = await fetch("/api/schedule", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            availabilityTime: startDate.toISOString(),
+          }),
+        });
+
+        if (response.ok) {
+          const newAvailability = await response.json();
+          setAvailability((prev) => [...prev, startDate]);
+          setStartDate(null); // Clear the date picker after confirming
+        } else {
+          console.error("Failed to save availability");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   };
 
   const handleRemove = (dateToRemove: Date) => {
-    setAvailability((prev) => prev.filter(date => date.getTime() !== dateToRemove.getTime()));
+    setAvailability((prev) =>
+      prev.filter((date) => date.getTime() !== dateToRemove.getTime())
+    );
   };
 
   return (
@@ -58,7 +83,9 @@ export default function SchedulingPage() {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                  })} at {date.toLocaleTimeString("en-US", {
+                  })}{" "}
+                  at{" "}
+                  {date.toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}
