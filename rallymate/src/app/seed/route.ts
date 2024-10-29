@@ -11,20 +11,44 @@ async function seedSchedule() {
     CREATE TABLE IF NOT EXISTS schedules (
       id SERIAL PRIMARY KEY,
       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-      availability_time TIMESTAMPTZ NOT NULL
+      availability_time TIMESTAMPTZ NOT NULL,
+      UNIQUE (user_id, availability_time)
     );
 `;
 const insertedSchedule = await Promise.all(
   schedules.map(async (schedule: Schedule) => {
-    return client.sql`
-      INSERT INTO schedules (user_id, availability_time)
-      VALUES (${schedule.user_id}, ${schedule.availability_time})
-      ON CONFLICT DO NOTHING;
-    `;
-  }),
-);
+    const { user_id, availability_time } = schedule;
+    const userCheck = await client.sql`
+        SELECT id FROM users WHERE id = ${user_id};
+      `;
+      if (userCheck.rows.length === 0) {
+        console.log(`User with ID ${user_id} does not exist.`);
+        return null; // Skip insertion if user doesn't exist
+      }
 
-return insertedSchedule;
+      // Insert the schedule if it doesn’t already exist for this user and time
+      return client.sql`
+        INSERT INTO schedules (user_id, availability_time)
+        VALUES (${user_id}, ${availability_time})
+        ON CONFLICT DO NOTHING;  -- Avoid duplicates per user/availability
+      `;
+    })
+  );
+
+  console.log("Inserted schedules:", insertedSchedule);
+
+  const matchingAvailabilities = await client.sql`
+    SELECT s1.user_id AS user_1, s2.user_id AS user_2, s1.availability_time
+    FROM schedules s1
+    JOIN schedules s2
+      ON s1.availability_time = s2.availability_time
+      AND s1.user_id < s2.user_id;  -- Only show each user pair once
+  `;
+
+  console.log("Users with matching availabilities:", matchingAvailabilities.rows);
+
+  return insertedSchedule;
+
 }
 async function seedUsers() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
