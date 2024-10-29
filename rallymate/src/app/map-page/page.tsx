@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {APIProvider, Map, AdvancedMarker} from '@vis.gl/react-google-maps';
 
 import { getMapMarkers } from '@/app/api/map-page/actions';
-import { PointOfInterest } from '@/app/lib/types';
+import { PointOfInterest } from '@/app/lib/definitions';
 
 export default function MapPage() {
   const [locations, setLocations] = useState<PointOfInterest[]>([]);

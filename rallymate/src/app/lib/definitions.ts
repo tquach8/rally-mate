@@ -4,3 +4,6 @@ export type User = {
   email: string;
   password: string;
 };
+
+export type PointOfInterest = { key: string, location: google.maps.LatLngLiteral };
+

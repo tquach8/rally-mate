@@ -1,6 +1,6 @@
 "use server";
 
-import { PointOfInterest } from '@/app/lib/types';
+import { PointOfInterest } from '@/app/lib/definitions';
 
 export async function getMapMarkers() {
   const locations: PointOfInterest[] = [
