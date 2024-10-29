@@ -1,9 +1,7 @@
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
-import { users } from "../lib/placeholder-data";
-import { User } from "../lib/definitions";
-import { schedules } from "../lib/placeholder-data";
-import { Schedule } from "../lib/definitions";
+import { users, courts, schedules } from "../lib/placeholder-data";
+import { User, Schedule, Court } from "../lib/definitions";
 
 const client = await db.connect();
 async function seedSchedule() {
@@ -53,11 +51,37 @@ async function seedUsers() {
   return insertedUsers;
 }
 
+async function seedCourts() {
+  await client.sql`DROP TABLE IF EXISTS courts`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS courts (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL UNIQUE,
+      display_name TEXT NOT NULL,
+      location POINT NOT NULL
+    );
+  `;
+
+  const insertedCourts = await Promise.all(
+    courts.map(async (court: Court) => {
+      return client.sql`
+        INSERT INTO courts (name, display_name, location)
+        VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}))
+        ON CONFLICT DO NOTHING;
+      `;
+    }),
+  );
+
+  return insertedCourts;
+}
+
 export async function GET() {
   try {
     await client.sql`BEGIN`;
     await seedUsers();
     await seedSchedule();
+    await seedCourts();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
