@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import { db } from '@vercel/postgres';
-import bcrypt from 'bcrypt';
 
 const client = await db.connect();
 
 export async function POST(request) {
   try {
-    const { userId, availabilityTime } = await request.json();
+    const { availabilityTime } = await request.json();
     // Insert availability time into the schedules table
     const result = await client.sql`
       INSERT INTO schedules (user_id, availability_time)
