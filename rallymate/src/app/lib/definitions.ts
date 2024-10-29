@@ -5,5 +5,5 @@ export type User = {
   password: string;
 };
 
-export type PointOfInterest = { key: string, location: google.maps.LatLngLiteral };
+export type Court = { key: string, location: google.maps.LatLngLiteral };
 

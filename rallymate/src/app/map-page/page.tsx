@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import {APIProvider, Map, AdvancedMarker} from '@vis.gl/react-google-maps';
 
 import { getMapMarkers } from '@/app/api/map-page/actions';
-import { PointOfInterest } from '@/app/lib/definitions';
+import { Court } from '@/app/lib/definitions';
 
 export default function MapPage() {
-  const [locations, setLocations] = useState<PointOfInterest[]>([]);
+  const [locations, setLocations] = useState<Court[]>([]);
 
   const fetchLocations = async () => {
     try {
