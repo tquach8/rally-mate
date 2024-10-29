@@ -15,7 +15,8 @@ export async function getMapMarkers() {
       jsonb_build_object(
           'lat', location[0],
           'lng', location[1]
-      ) AS location
+      ) AS location,
+      number_of_courts
     FROM courts;
   `;
 

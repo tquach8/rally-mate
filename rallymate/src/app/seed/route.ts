@@ -59,15 +59,16 @@ async function seedCourts() {
       id SERIAL PRIMARY KEY,
       name TEXT NOT NULL UNIQUE,
       display_name TEXT NOT NULL,
-      location POINT NOT NULL
+      location POINT NOT NULL,
+      number_of_courts INTEGER NOT NULL
     );
   `;
 
   const insertedCourts = await Promise.all(
     courts.map(async (court: Court) => {
       return client.sql`
-        INSERT INTO courts (name, display_name, location)
-        VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}))
+        INSERT INTO courts (name, display_name, location, number_of_courts)
+        VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}), ${court.number_of_courts})
         ON CONFLICT DO NOTHING;
       `;
     }),

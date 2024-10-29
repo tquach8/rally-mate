@@ -18,7 +18,8 @@ const courts = [
     id: 1,
     name: "calgary-thornhill",
     display_name: "Thornhill Tennis/Pickleball Courts",
-    location: { lat: 51.111839820880064, lng: -114.0650242969602}
+    location: { lat: 51.111839820880064, lng: -114.0650242969602},
+    number_of_courts: 5,
   }
 ]
 

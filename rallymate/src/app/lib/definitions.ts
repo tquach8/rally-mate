@@ -5,7 +5,7 @@ export type User = {
   password: string;
 };
 
-export type Court = { id: number, name: string, display_name: string, location: google.maps.LatLngLiteral };
+export type Court = { id: number, name: string, display_name: string, location: google.maps.LatLngLiteral, number_of_courts: number };
 
 export type Schedule = {
   id: string;
