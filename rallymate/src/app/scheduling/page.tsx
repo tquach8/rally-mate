@@ -26,7 +26,7 @@ export default function SchedulingPage() {
         });
 
         if (response.ok) {
-          const newAvailability = await response.json();
+          // const newAvailability = await response.json();
           setAvailability((prev) => [...prev, startDate]);
           setStartDate(null); // Clear the date picker after confirming
         } else {
