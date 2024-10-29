@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: {
+        tertiary: {
           DEFAULT: '#f8f2f2', 100: '#402222', 200: '#7f4545', 300: '#b37272', 400: '#d6b2b2', 500: '#f8f2f2', 600: '#f9f4f4', 700: '#fbf7f7', 800: '#fcfafa', 900: '#fefcfc'
         },
         primary: {
@@ -18,7 +18,7 @@ const config: Config = {
         secondary: {
           DEFAULT: '#f2c078', 100: '#422907', 200: '#84520d', 300: '#c67b14', 400: '#eba037', 500: '#f2c078', 600: '#f4cc93', 700: '#f7d9ae', 800: '#fae5c9', 900: '#fcf2e4' 
         },
-        // background: "var(--background)",
+        background: "var(--background)",
         foreground: "var(--foreground)",
       },
     },
