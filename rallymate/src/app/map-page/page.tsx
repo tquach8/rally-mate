@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {APIProvider, Map, AdvancedMarker} from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 
 import { getMapMarkers } from '@/app/api/map-page/actions';
 import { Court } from '@/app/lib/definitions';
@@ -21,6 +21,10 @@ export default function MapPage() {
     fetchLocations();
   }, []);
 
+  const handleMarkerClick = (court: Court) => {
+    console.log('Marker clicked:', court);
+  };
+
   return (
     <APIProvider apiKey="AIzaSyD2mujnNpmbA1SpYjE-p0NNGgYBis9ZwhM">
     <Map
@@ -31,10 +35,14 @@ export default function MapPage() {
       gestureHandling={'greedy'}
       disableDefaultUI={true}
     >
-      {locations.map((marker) => (
+      {locations.map((court) => (
         <AdvancedMarker
-          key={marker.key}
-          position={marker.location}
+          clickable={true}
+          key={court.key}
+          position={court.location}
+          onClick={() => {
+            handleMarkerClick(court);
+          }}
         />
       ))}
     </Map>
