@@ -15,7 +15,13 @@ async function seedUsers() {
       password TEXT NOT NULL
     );
   `;
-
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS schedules (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      availability_time TIMESTAMPTZ NOT NULL
+    );
+  `;
   const insertedUsers = await Promise.all(
     users.map(async (user: User) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -42,4 +48,3 @@ export async function GET() {
     return Response.json({ error }, { status: 500 });
   }
 }
-
