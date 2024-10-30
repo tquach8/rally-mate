@@ -37,7 +37,7 @@ export default function MapPage() {
 
   return (
     <div className="w-full h-full flex">
-      <div className="w-2/3 m-4 rounded-xl overflow-hidden p-12 bg-slate-200">
+      <div className="w-2/3 m-4 rounded-xl overflow-hidden">
         <APIProvider apiKey="AIzaSyD2mujnNpmbA1SpYjE-p0NNGgYBis9ZwhM">
           <Map
             mapId="a36974837d33b973"
@@ -53,10 +53,10 @@ export default function MapPage() {
           </Map>
         </APIProvider>
       </div>
-      <div className="w-1/3 m-4 rounded-xl overflow-auto">
+      <div className="w-1/3 m-4 rounded-xl overflow-auto p-4 bg-slate-200">
         {selectedCourt && (
           <>
-            <div className="bg-white p-4">
+            <div className="bg-white p-4 mb-4 rounded-xl">
               <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
               <p>{selectedCourt.number_of_courts} courts</p>
             </div>

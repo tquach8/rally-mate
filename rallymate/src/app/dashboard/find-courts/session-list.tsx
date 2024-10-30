@@ -34,15 +34,7 @@ export default function SessionList({ court }: { court: Court }) {
   }, [court]);
 
   return (
-    <div className="bg-white p-4">
-      {!sessionModalOpen && (
-        <button
-          className="bg-primary rounded px-4 py-2"
-          onClick={handleCreateSession}
-        >
-          Create session
-        </button>
-      )}
+    <div className="bg-white p-2 rounded-xl">
       {sessionModalOpen && (
         <div className="bg-white p-4">
           <div className="flex justify-between">
@@ -52,10 +44,7 @@ export default function SessionList({ court }: { court: Court }) {
           <form action={handleFormSubmit}>
             <input type="hidden" name="courtId" value={court.id} />
             <div className="mb-4">
-              <label
-                htmlFor="date"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
                 Date
               </label>
               <input
@@ -67,10 +56,7 @@ export default function SessionList({ court }: { court: Court }) {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="maxPlayers"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="maxPlayers" className="block text-sm font-medium text-gray-700">
                 Players
               </label>
               <input
@@ -83,10 +69,7 @@ export default function SessionList({ court }: { court: Court }) {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="hours"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="hours" className="block text-sm font-medium text-gray-700">
                 Hours
               </label>
               <input
@@ -99,10 +82,7 @@ export default function SessionList({ court }: { court: Court }) {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="type"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="type" className="block text-sm font-medium text-gray-700">
                 Type
               </label>
               <select
@@ -118,10 +98,17 @@ export default function SessionList({ court }: { court: Court }) {
           </form>
         </div>
       )}
-      <h2 className="text-xl font-semibold">Sessions</h2>
-      <ul>
+      <h2 className="text-xl font-semibold mb-2">
+        Sessions{" "}
+        {!sessionModalOpen && (
+          <button className="bg-primary rounded px-2" onClick={handleCreateSession}>
+            +
+          </button>
+        )}
+      </h2>
+      <ul className="flex flex-col gap-2">
         {sessions.map((session) => (
-          <li key={session.id}>
+          <li key={session.id} className="rounded-xl bg-secondary-900 p-2">
             <Session session={session} />
           </li>
         ))}
