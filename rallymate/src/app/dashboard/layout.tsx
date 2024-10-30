@@ -11,7 +11,7 @@ export default async function Layout({
   return (
     <div className="bg-secondary-700 min-h-screen">
       <div className="min-h-screen bg-tertiary-700 p-8 rounded-lg">
-        <Navigation />
+        <Navigation username={user?.name} />
       </div>
     </div>
   );

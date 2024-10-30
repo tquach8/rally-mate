@@ -10,7 +10,7 @@ import {
   IoTennisballOutline,
 } from "react-icons/io5";
 
-export default function Navigation() {
+export default function Navigation({ username }: { username: string }) {
   const currentPath = usePathname();
 
   const activeLink = (path: string) => {
@@ -21,7 +21,7 @@ export default function Navigation() {
 
   return (
     <div className="flex items-center justify-between">
-      <h4 className="font-semibold text-lg">Hello, username!</h4>
+      <h4 className="font-semibold text-lg">Hello, {username}!</h4>
       <div className="flex flex-row gap-4">
         <Link className={`${activeLink("/dashboard")}`} href="/dashboard">
           <IoMapOutline className="w-8 h-6" />
