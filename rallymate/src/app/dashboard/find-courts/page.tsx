@@ -10,6 +10,7 @@ import {
 
 import { getMapMarkers } from "@/app/api/find-courts/actions";
 import { Court } from "@/app/lib/definitions";
+import SessionList from "./session-list";
 
 export default function MapPage() {
   const [locations, setLocations] = useState<Court[]>([]);
@@ -52,10 +53,13 @@ export default function MapPage() {
       </div>
       <div className="w-1/3">
         {selectedCourt && (
-          <div className="bg-white p-4">
-            <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
-            <p>{selectedCourt.number_of_courts} courts</p>
-          </div>
+          <>
+            <div className="bg-white p-4">
+              <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
+              <p>{selectedCourt.number_of_courts} courts</p>
+            </div>
+            <SessionList court={selectedCourt} />
+          </>
         )}
       </div>
     </div>
