@@ -16,6 +16,7 @@ import SessionList from "@/app/dashboard/find-courts/session-list";
 export default function MapPage() {
   const [locations, setLocations] = useState<Court[]>([]);
   const [selectedCourt, setSelectedCourt] = useState<Court | null>(null);
+  const [sessionModalOpen, setSessionModalOpen] = useState(false);
 
   const fetchLocations = async () => {
     try {
@@ -29,8 +30,6 @@ export default function MapPage() {
   const handleClick = (court: Court) => {
     setSelectedCourt(court);
   };
-
-  const handleCreateSession = () => {};
 
   useEffect(() => {
     fetchLocations();
@@ -58,11 +57,10 @@ export default function MapPage() {
         {selectedCourt && (
           <>
             <div className="bg-white p-4">
-              <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
+              <h2 className="text-xl font-semibold">
+                {selectedCourt.display_name}
+              </h2>
               <p>{selectedCourt.number_of_courts} courts</p>
-              <button className="bg-primary rounded px-4 py-2" onClick={handleCreateSession}>
-                Create session
-              </button>
             </div>
             <SessionList court={selectedCourt} />
           </>
@@ -72,7 +70,13 @@ export default function MapPage() {
   );
 }
 
-function Marker({ court, onClick }: { court: Court; onClick: (court: Court) => void }) {
+function Marker({
+  court,
+  onClick,
+}: {
+  court: Court;
+  onClick: (court: Court) => void;
+}) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
