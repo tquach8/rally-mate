@@ -119,7 +119,8 @@ async function seedCourtSessionPlayers() {
     CREATE TABLE IF NOT EXISTS court_session_players (
       id SERIAL PRIMARY KEY,
       court_session_id INTEGER REFERENCES court_sessions(id) ON DELETE CASCADE,
-      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      CONSTRAINT unique_user_court_session UNIQUE (user_id, court_session_id)
     );
   `;
 
