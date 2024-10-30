@@ -36,8 +36,8 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="w-full h-full flex">
-      <div className="w-2/3 m-4 rounded-xl overflow-hidden">
+    <div className="w-full h-full flex gap-4">
+      <div className="w-2/3 rounded-xl overflow-hidden">
         <APIProvider apiKey="AIzaSyD2mujnNpmbA1SpYjE-p0NNGgYBis9ZwhM">
           <Map
             mapId="a36974837d33b973"
@@ -53,7 +53,7 @@ export default function MapPage() {
           </Map>
         </APIProvider>
       </div>
-      <div className="w-1/3 m-4 rounded-xl overflow-auto p-4 bg-slate-200">
+      <div className="w-1/3 rounded-xl overflow-auto p-4 bg-slate-200">
         {selectedCourt && (
           <>
             <div className="bg-white p-4 mb-4 rounded-xl">
