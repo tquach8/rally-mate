@@ -37,7 +37,7 @@ export default function MapPage() {
 
   return (
     <div className="w-full h-full flex">
-      <div className="w-2/3">
+      <div className="w-2/3 m-4 rounded-xl overflow-hidden p-12 bg-slate-200">
         <APIProvider apiKey="AIzaSyD2mujnNpmbA1SpYjE-p0NNGgYBis9ZwhM">
           <Map
             mapId="a36974837d33b973"
@@ -53,7 +53,7 @@ export default function MapPage() {
           </Map>
         </APIProvider>
       </div>
-      <div className="w-1/3">
+      <div className="w-1/3 m-4 rounded-xl overflow-hidden">
         {selectedCourt && (
           <>
             <div className="bg-white p-4">
