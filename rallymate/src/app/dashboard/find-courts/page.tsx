@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import {
   APIProvider,
@@ -10,7 +11,7 @@ import {
 
 import { getMapMarkers } from "@/app/api/find-courts/actions";
 import { Court } from "@/app/lib/definitions";
-import SessionList from "./session-list";
+import SessionList from "@/app/dashboard/find-courts/session-list";
 
 export default function MapPage() {
   const [locations, setLocations] = useState<Court[]>([]);
@@ -28,6 +29,8 @@ export default function MapPage() {
   const handleClick = (court: Court) => {
     setSelectedCourt(court);
   };
+
+  const handleCreateSession = () => {};
 
   useEffect(() => {
     fetchLocations();
@@ -57,6 +60,9 @@ export default function MapPage() {
             <div className="bg-white p-4">
               <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
               <p>{selectedCourt.number_of_courts} courts</p>
+              <button className="bg-primary rounded px-4 py-2" onClick={handleCreateSession}>
+                Create session
+              </button>
             </div>
             <SessionList court={selectedCourt} />
           </>

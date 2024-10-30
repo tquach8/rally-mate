@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+
 import { Court, CourtSession } from "@/app/lib/definitions";
 import { getCourtSessions } from "@/app/api/find-courts/actions";
-import Session from "./session";
+import Session from "@/app/dashboard/find-courts/session";
 
 export default function SessionList({ court }: { court: Court }) {
   const [sessions, setSessions] = useState<CourtSession[]>([]);
