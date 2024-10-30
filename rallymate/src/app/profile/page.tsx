@@ -1,5 +1,1 @@
-export default function MapPage() {
-  return (
-    <div> Hello, profile page! </div>
-  )
-}
+export default async function MapPage() {}

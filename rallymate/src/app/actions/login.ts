@@ -4,9 +4,7 @@ import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
-import { SignJWT } from 'jose'
-
-const SECRET_KEY = process.env.SECRET_SESSION || "secret";
+import { encrypt } from "@/app/lib/session";
 
 export async function login(formData: FormData) {
   const email = formData.get("email") as string;
@@ -26,12 +24,7 @@ export async function login(formData: FormData) {
       throw new Error("Invalid password");
     }
 
-    const encodedKey = new TextEncoder().encode(SECRET_KEY)
-    const sessionToken = await new SignJWT({ userId: user.id })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setIssuedAt()
-      .setExpirationTime('7d')
-      .sign(encodedKey)
+    const sessionToken = await encrypt({ userId: user.id, email: user.email })
     const cookie = await cookies();
 
     cookie.set('session', sessionToken, {
@@ -45,5 +38,5 @@ export async function login(formData: FormData) {
     console.error(error);
   }
 
-  redirect("/profile");
+  redirect("/dashboard");
 }

@@ -5,6 +5,11 @@ export type User = {
   password: string;
 };
 
+export type SessionPayload = {
+  userId: string;
+  email: string;
+}
+
 export type Court = { id: number, name: string, display_name: string, location: google.maps.LatLngLiteral };
 
 export type Schedule = {

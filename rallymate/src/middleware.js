@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose'
-
-const SECRET_KEY = "secret";
+import { decrypt } from "@/app/lib/session";
 
 export async function middleware(request) {
   const sessionToken = request.cookies.get('session')?.value;
@@ -12,11 +10,7 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   try {
-    const encodedKey = new TextEncoder().encode(SECRET_KEY)
-    const { payload } = await jwtVerify(sessionToken, encodedKey, {
-      algorithms: ['HS256'],
-    })
-    console.log(payload);
+    await decrypt(sessionToken);
 
     return NextResponse.next();
   } catch (error) {
