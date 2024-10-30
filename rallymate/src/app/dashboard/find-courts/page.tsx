@@ -53,7 +53,7 @@ export default function MapPage() {
           </Map>
         </APIProvider>
       </div>
-      <div className="w-1/3 rounded-xl overflow-auto p-4 bg-slate-200">
+      <div className="w-1/3 rounded-xl p-4 bg-slate-200 overflow-auto">
         {selectedCourt && (
           <>
             <div className="bg-white p-4 mb-4 rounded-xl">
