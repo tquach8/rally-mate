@@ -22,5 +22,22 @@ const courts = [
     number_of_courts: 5,
   }
 ]
+const courtSessions = [
+  {
+    id: 1,
+    user_id: 1,
+    court_id: 1,
+    start_time: "2024-10-29T12:00:00",
+    number_of_hours: 2,
+    max_players: 4,
+    type: 0,
+  },
+];
+const courtSessionPlayers = [
+  {
+    court_session_id: 1,
+    user_id: 1,
+  }
+];
 
-export { users, schedules, courts };
+export { users, schedules, courts, courtSessions, courtSessionPlayers };

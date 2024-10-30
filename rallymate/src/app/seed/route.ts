@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
-import { users, courts, schedules } from "../lib/placeholder-data";
+import { users, courts, courtSessions, courtSessionPlayers, schedules } from "../lib/placeholder-data";
 import { User, Schedule, Court } from "../lib/definitions";
 
 const client = await db.connect();
@@ -77,12 +77,68 @@ async function seedCourts() {
   return insertedCourts;
 }
 
+async function seedCourtSessions() {
+  await client.sql`DROP TABLE IF EXISTS court_sessions`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS courts (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      court_id INTEGER REFERENCES courts(id) ON DELETE CASCADE,
+      start_time TIMESTAMPTZ NOT NULL,
+      number_of_hours INTEGER NOT NULL,
+      max_players INTEGER NOT NULL,
+      type INTEGER NOT NULL
+    );
+  `;
+
+  // type 0 = Rally, type 1 = Singles, type 2 = Doubles
+
+  const insertedCourtSessions = await Promise.all(
+    courtSessions.map(async (courtSession) => {
+      return client.sql`
+        INSERT INTO court_sessions (user_id, court_id, start_time, number_of_hours, max_players, type)
+        VALUES (${courtSession.user_id}, ${courtSession.court_id}, ${courtSession.start_time}, ${courtSession.number_of_hours}, ${courtSession.max_players}, ${courtSession.type})
+        ON CONFLICT DO NOTHING;
+      `;
+    }),
+  );
+
+  return insertedCourtSessions;
+}
+
+async function seedCourtSessionPlayers() {
+  await client.sql`DROP TABLE IF EXISTS court_session_players`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS court_session_players (
+      id SERIAL PRIMARY KEY,
+      court_session_id INTEGER REFERENCES court_sessions(id) ON DELETE CASCADE,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+    );
+  `;
+
+  const insertedCourtSessionPlayers = await Promise.all(
+    courtSessionPlayers.map(async (courtSessionPlayer) => {
+      return client.sql`
+        INSERT INTO court_session_players (court_session_id, user_id)
+        VALUES (${courtSessionPlayer.court_session_id}, ${courtSessionPlayer.user_id})
+        ON CONFLICT DO NOTHING;
+      `;
+    }),
+  );
+
+  return insertedCourtSessionPlayers;
+}
+
 export async function GET() {
   try {
     await client.sql`BEGIN`;
     await seedUsers();
     await seedSchedule();
     await seedCourts();
+    await seedCourtSessions();
+    await seedCourtSessionPlayers();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
