@@ -23,7 +23,7 @@ export default function Navigation({ username }: { username: string }) {
     <div className="flex items-center justify-between">
       <h4 className="font-semibold text-lg">Hello, {username}!</h4>
       <div className="flex flex-row gap-4">
-        <Link className={`${activeLink("/dashboard")}`} href="/dashboard">
+        <Link className={`${activeLink("/dashboard/find-courts")}`} href="/dashboard/find-courts">
           <IoMapOutline className="w-8 h-6" />
         </Link>
         <Link className={activeLink("/stats")} href="/stats">
