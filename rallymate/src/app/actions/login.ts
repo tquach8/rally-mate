@@ -38,5 +38,5 @@ export async function login(formData: FormData) {
     console.error(error);
   }
 
-  redirect("/dashboard");
+  redirect("/dashboard/find-courts");
 }

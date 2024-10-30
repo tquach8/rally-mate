@@ -52,7 +52,7 @@ async function seedUsers() {
 }
 
 async function seedCourts() {
-  await client.sql`DROP TABLE IF EXISTS courts`;
+  await client.sql`DROP TABLE IF EXISTS courts CASCADE`;
 
   await client.sql`
     CREATE TABLE IF NOT EXISTS courts (
@@ -78,10 +78,10 @@ async function seedCourts() {
 }
 
 async function seedCourtSessions() {
-  await client.sql`DROP TABLE IF EXISTS court_sessions`;
+  await client.sql`DROP TABLE IF EXISTS court_sessions CASCADE`;
 
   await client.sql`
-    CREATE TABLE IF NOT EXISTS courts (
+    CREATE TABLE IF NOT EXISTS court_sessions (
       id SERIAL PRIMARY KEY,
       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
       court_id INTEGER REFERENCES courts(id) ON DELETE CASCADE,
@@ -108,7 +108,7 @@ async function seedCourtSessions() {
 }
 
 async function seedCourtSessionPlayers() {
-  await client.sql`DROP TABLE IF EXISTS court_session_players`;
+  await client.sql`DROP TABLE IF EXISTS court_session_players CASCADE`;
 
   await client.sql`
     CREATE TABLE IF NOT EXISTS court_session_players (
