@@ -53,13 +53,11 @@ export default function MapPage() {
           </Map>
         </APIProvider>
       </div>
-      <div className="w-1/3 m-4 rounded-xl overflow-hidden">
+      <div className="w-1/3 m-4 rounded-xl overflow-auto">
         {selectedCourt && (
           <>
             <div className="bg-white p-4">
-              <h2 className="text-xl font-semibold">
-                {selectedCourt.display_name}
-              </h2>
+              <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
               <p>{selectedCourt.number_of_courts} courts</p>
             </div>
             <SessionList court={selectedCourt} />
@@ -70,13 +68,7 @@ export default function MapPage() {
   );
 }
 
-function Marker({
-  court,
-  onClick,
-}: {
-  court: Court;
-  onClick: (court: Court) => void;
-}) {
+function Marker({ court, onClick }: { court: Court; onClick: (court: Court) => void }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
