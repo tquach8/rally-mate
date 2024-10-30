@@ -1,15 +1,27 @@
 const users = [
   {
-    id: "410544b2-4001-4271-9855-fec4b6a6442a",
-    name: "RallyMate01",
-    email: "rallymate01@test.com",
+    id: 1,
+    name: "Tan Quach",
+    email: "rm1@test.com",
+    password: "testtest",
+  },
+  {
+    id: 2,
+    name: "Karen Zhang",
+    email: "rm2@test.com",
+    password: "testtest",
+  },
+  {
+    id: 3,
+    name: "Emilio Alvarez",
+    email: "rm3@test.com",
     password: "testtest",
   },
 ];
 const schedules = [
   {
-    id: "410544b2-4001-4271-9855-fec4b6a6442b",
-    user_id: "1",
+    id: 1,
+    user_id: 1,
     availability_time: "2024-10-29",
   },
 ];

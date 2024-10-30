@@ -1,6 +1,12 @@
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
-import { users, courts, courtSessions, courtSessionPlayers, schedules } from "../lib/placeholder-data";
+import {
+  users,
+  courts,
+  courtSessions,
+  courtSessionPlayers,
+  schedules,
+} from "../lib/placeholder-data";
 import { User, Schedule, Court } from "../lib/definitions";
 
 const client = await db.connect();
@@ -12,20 +18,21 @@ async function seedSchedule() {
       availability_time TIMESTAMPTZ NOT NULL
     );
 `;
-const insertedSchedule = await Promise.all(
-  schedules.map(async (schedule: Schedule) => {
-    return client.sql`
+  const insertedSchedule = await Promise.all(
+    schedules.map(async (schedule: Schedule) => {
+      return client.sql`
       INSERT INTO schedules (user_id, availability_time)
       VALUES (${schedule.user_id}, ${schedule.availability_time})
       ON CONFLICT DO NOTHING;
     `;
-  }),
-);
+    })
+  );
 
-return insertedSchedule;
+  return insertedSchedule;
 }
 async function seedUsers() {
-  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await client.sql`DROP TABLE IF EXISTS users CASCADE`;
+
   await client.sql`
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
@@ -35,17 +42,15 @@ async function seedUsers() {
     );
   `;
 
-
-
   const insertedUsers = await Promise.all(
     users.map(async (user: User) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       return client.sql`
-        INSERT INTO users (name, email, password)
-        VALUES (${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, name, email, password)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
         ON CONFLICT DO NOTHING;
       `;
-    }),
+    })
   );
 
   return insertedUsers;
@@ -71,7 +76,7 @@ async function seedCourts() {
         VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}), ${court.number_of_courts})
         ON CONFLICT DO NOTHING;
       `;
-    }),
+    })
   );
 
   return insertedCourts;
@@ -101,7 +106,7 @@ async function seedCourtSessions() {
         VALUES (${courtSession.user_id}, ${courtSession.court_id}, ${courtSession.start_time}, ${courtSession.number_of_hours}, ${courtSession.max_players}, ${courtSession.type})
         ON CONFLICT DO NOTHING;
       `;
-    }),
+    })
   );
 
   return insertedCourtSessions;
@@ -125,7 +130,7 @@ async function seedCourtSessionPlayers() {
         VALUES (${courtSessionPlayer.court_session_id}, ${courtSessionPlayer.user_id})
         ON CONFLICT DO NOTHING;
       `;
-    }),
+    })
   );
 
   return insertedCourtSessionPlayers;
@@ -141,7 +146,7 @@ export async function GET() {
     await seedCourtSessionPlayers();
     await client.sql`COMMIT`;
 
-    return Response.json({ message: 'Database seeded successfully' });
+    return Response.json({ message: "Database seeded successfully" });
   } catch (error) {
     await client.sql`ROLLBACK`;
     return Response.json({ error }, { status: 500 });
