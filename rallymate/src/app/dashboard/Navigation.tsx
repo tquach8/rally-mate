@@ -9,9 +9,11 @@ import {
   IoNotificationsOutline,
   IoTennisballOutline,
 } from "react-icons/io5";
+import { useUser } from "./user-context";
 
-export default function Navigation({ username }: { username: string }) {
+export default function Navigation() {
   const currentPath = usePathname();
+  const user = useUser();
 
   const activeLink = (path: string) => {
     return currentPath === path
@@ -21,7 +23,7 @@ export default function Navigation({ username }: { username: string }) {
 
   return (
     <div className="flex items-center justify-between">
-      <h4 className="font-semibold text-lg">Hello, {username}!</h4>
+      <h4 className="font-semibold text-lg">Hello, {user?.name}!</h4>
       <div className="flex flex-row gap-4">
         <Link className={`${activeLink("/dashboard/find-courts")}`} href="/dashboard/find-courts">
           <IoMapOutline className="w-8 h-6" />

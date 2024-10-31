@@ -1,21 +1,24 @@
 const users = [
   {
     id: 1,
-    name: "Tan Quach",
+    name: "Novak Djokovic",
     email: "rm1@test.com",
     password: "testtest",
+    profile_url: "/profile1.jpeg",
   },
   {
     id: 2,
-    name: "Karen Zhang",
+    name: "Rafael Nadal",
     email: "rm2@test.com",
     password: "testtest",
+    profile_url: "/profile2.jpeg",
   },
   {
     id: 3,
-    name: "Emilio Alvarez",
+    name: "Roger Federer",
     email: "rm3@test.com",
     password: "testtest",
+    profile_url: "/profile3.jpeg",
   },
 ];
 const schedules = [
@@ -32,6 +35,7 @@ const courts = [
     display_name: "Thornhill Tennis/Pickleball Courts",
     location: { lat: 51.111839820880064, lng: -114.0650242969602},
     number_of_courts: 5,
+    image_url: "/ThorncliffeTennis.jpeg",
   }
 ]
 const courtSessions = [

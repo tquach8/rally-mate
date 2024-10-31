@@ -9,14 +9,17 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 
-import { getMapMarkers } from "@/app/api/find-courts/actions";
+import {
+  getCourtPlayers,
+  getMapMarkers,
+} from "@/app/api/find-courts/actions";
 import { Court } from "@/app/lib/definitions";
 import SessionList from "@/app/dashboard/find-courts/session-list";
+import Image from "next/image";
 
 export default function MapPage() {
   const [locations, setLocations] = useState<Court[]>([]);
   const [selectedCourt, setSelectedCourt] = useState<Court | null>(null);
-  const [sessionModalOpen, setSessionModalOpen] = useState(false);
 
   const fetchLocations = async () => {
     try {
@@ -56,8 +59,10 @@ export default function MapPage() {
       <div className="w-1/3 rounded-xl p-4 bg-slate-200 overflow-auto">
         {selectedCourt && (
           <>
-            <div className="bg-white p-4 mb-4 rounded-xl">
-              <h2 className="text-xl font-semibold">{selectedCourt.display_name}</h2>
+            <div className="flex bg-white p-4 mb-4 rounded-xl">
+              <h2 className="text-xl font-semibold">
+                {selectedCourt.display_name}
+              </h2>
               <p>{selectedCourt.number_of_courts} courts</p>
             </div>
             <SessionList court={selectedCourt} />
@@ -68,16 +73,49 @@ export default function MapPage() {
   );
 }
 
-function Marker({ court, onClick }: { court: Court; onClick: (court: Court) => void }) {
+function Marker({
+  court,
+  onClick,
+}: {
+  court: Court;
+  onClick: (court: Court) => void;
+}) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
+  const [currentPlayers, setCurrentPlayers] = useState([]);
 
   const handleMarkerClick = (court: Court) => {
-    setInfoWindowShown(true);
+    setInfoWindowShown(!infoWindowShown);
     onClick(court);
   };
 
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const players = await getCourtPlayers(court);
+        setCurrentPlayers(players);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (infoWindowShown) {
+      fetchPlayers();
+    }
+  }, [infoWindowShown]);
+
   const handleClose = () => setInfoWindowShown(false);
+
+  const borderColors = [
+    "border-blue-200",
+    "border-red-200",
+    "border-green-200",
+    "border-yellow-200",
+    "border-purple-200",
+    "border-pink-200",
+    "border-teal-200",
+    "border-orange-200",
+  ];
 
   return (
     <>
@@ -92,10 +130,41 @@ function Marker({ court, onClick }: { court: Court; onClick: (court: Court) => v
       />
 
       {infoWindowShown && (
-        <InfoWindow anchor={marker} onClose={handleClose}>
-          <div>
-            <h1>{court.display_name}</h1>
-            <p>{court.number_of_courts} courts</p>
+        <InfoWindow anchor={marker} onClose={handleClose} headerDisabled={true}>
+          <div className="flex justify-between">
+            <div className="relative w-40 h-40 overflow-hidden rounded-lg">
+              <Image
+                layout="fill"
+                className="rounded-lg"
+                src={court.image_url}
+                alt={court.display_name}
+              />
+            </div>
+            <div className="ml-4">
+              <h1 className="text-lg font-medium">{court.display_name}</h1>
+              <p>{court.number_of_courts} courts</p>
+              {currentPlayers.length > 0 && (
+                <div className="mt-4">
+                  <h2 className="text-lg font-medium">Active players</h2>
+                  <div className="flex gap-2">
+                    {currentPlayers.map((player) => {
+                      const randomColor =
+                        borderColors[
+                          Math.floor(Math.random() * borderColors.length)
+                        ];
+                      return (
+                        <img
+                          key={player.id}
+                          src={player.profile_url}
+                          alt={player.name}
+                          className={`w-10 h-10 rounded-full object-cover border-4 ${randomColor}`}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </InfoWindow>
       )}

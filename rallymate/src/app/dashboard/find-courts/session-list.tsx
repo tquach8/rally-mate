@@ -13,7 +13,6 @@ export default function SessionList({ court }: { court: Court }) {
     try {
       const sessions = await getCourtSessions(court);
       setSessions(sessions);
-      console.log(sessions);
     } catch (error) {
       console.error(error);
     }
@@ -34,7 +33,7 @@ export default function SessionList({ court }: { court: Court }) {
   }, [court]);
 
   return (
-    <div className="bg-white p-2 rounded-xl">
+    <div className="bg-white p-4 rounded-xl">
       {sessionModalOpen && (
         <div className="bg-white p-4">
           <div className="flex justify-between">

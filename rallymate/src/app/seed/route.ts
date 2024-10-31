@@ -38,7 +38,8 @@ async function seedUsers() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       email TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL
+      password TEXT NOT NULL,
+      profile_url TEXT
     );
   `;
 
@@ -46,8 +47,8 @@ async function seedUsers() {
     users.map(async (user: User) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, name, email, password, profile_url)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword}, ${user.profile_url})
         ON CONFLICT DO NOTHING;
       `;
     })
@@ -65,15 +66,16 @@ async function seedCourts() {
       name TEXT NOT NULL UNIQUE,
       display_name TEXT NOT NULL,
       location POINT NOT NULL,
-      number_of_courts INTEGER NOT NULL
+      number_of_courts INTEGER NOT NULL,
+      image_url TEXT
     );
   `;
 
   const insertedCourts = await Promise.all(
     courts.map(async (court: Court) => {
       return client.sql`
-        INSERT INTO courts (name, display_name, location, number_of_courts)
-        VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}), ${court.number_of_courts})
+        INSERT INTO courts (name, display_name, location, number_of_courts, image_url)
+        VALUES (${court.name}, ${court.display_name}, point(${court.location.lat}, ${court.location.lng}), ${court.number_of_courts}, ${court.image_url})
         ON CONFLICT DO NOTHING;
       `;
     })
