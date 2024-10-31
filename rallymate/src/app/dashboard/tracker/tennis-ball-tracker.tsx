@@ -118,7 +118,7 @@ const TennisBallTracker = () => {
 
                 const balls = detections.filter(d => {
                   // Include both "sports ball" and "ball" classes
-                  return (d.class === "sports ball" || d.class === "ball") && d.score > 0.3;
+                  return (d.class === "sports ball" || d.class === "ball") && d.score > 0.1;
                 });
 
                 if (balls.length > 0) {
@@ -162,7 +162,7 @@ const TennisBallTracker = () => {
                 strokeColor = [255, 165, 0]; // Orange for other detections
               }
 
-              if (bbox && bbox.length === 4 && score > 0.3) {
+              if (bbox && bbox.length === 4 && score > 0.3 && className === "sports ball") {
                 const [x, y, width, height] = bbox;
 
                 p.stroke(...strokeColor);

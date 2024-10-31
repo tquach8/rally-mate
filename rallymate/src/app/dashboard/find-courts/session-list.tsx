@@ -107,7 +107,7 @@ export default function SessionList({ court }: { court: Court }) {
       </h2>
       <ul className="flex flex-col gap-2">
         {sessions.map((session) => (
-          <li key={session.id} className="rounded-xl bg-secondary-900 p-2">
+          <li key={session.id} className="rounded-xl bg-gray-100 p-2">
             <Session session={session} />
           </li>
         ))}

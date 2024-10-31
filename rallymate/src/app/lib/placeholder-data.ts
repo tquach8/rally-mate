@@ -20,6 +20,34 @@ const users = [
     password: "testtest",
     profile_url: "/profile3.jpeg",
   },
+  {
+    id: 4,
+    name: "Neel Parikh",
+    email: "rm4@test.com",
+    password: "testtest",
+    profile_url: "/profile4.jpeg",
+  },
+  {
+    id: 5,
+    name: "Tan Quach",
+    email: "rm5@test.com",
+    password: "testtest",
+    profile_url: "/profile5.jpeg",
+  },
+  {
+    id: 6,
+    name: "Emilio Alvarez",
+    email: "rm6@test.com",
+    password: "testtest",
+    profile_url: "/profile6.jpeg",
+  },
+  {
+    id: 7,
+    name: "Karen Zhang",
+    email: "rm7@test.com",
+    password: "testtest",
+    profile_url: "/profile7.jpeg",
+  },
 ];
 const schedules = [
   {
@@ -48,12 +76,45 @@ const courtSessions = [
     max_players: 4,
     type: 0,
   },
+  {
+    id: 2,
+    user_id: 4,
+    court_id: 1,
+    start_time: "2024-11-01T00:00:00",
+    number_of_hours: 2,
+    max_players: 4,
+    type: 2,
+  },
 ];
 const courtSessionPlayers = [
   {
     court_session_id: 1,
     user_id: 1,
-  }
+  },
+  {
+    court_session_id: 1,
+    user_id: 2,
+  },
+  {
+    court_session_id: 1,
+    user_id: 3,
+  },
+  {
+    court_session_id: 2,
+    user_id: 4,
+  },
+  {
+    court_session_id: 2,
+    user_id: 5,
+  },
+  {
+    court_session_id: 2,
+    user_id: 6,
+  },
+  {
+    court_session_id: 2,
+    user_id: 7,
+  },
 ];
 
 export { users, schedules, courts, courtSessions, courtSessionPlayers };
