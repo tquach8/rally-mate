@@ -3,7 +3,6 @@
 import { getUser } from "@/app/lib/dal";
 import { db } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createSession(formData: FormData) {
   const courtId = formData.get("courtId") as string;

@@ -6,6 +6,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const user = await getUser();
+  console.log(children);
  
   return (
     <div>Hello {user?.name}</div>

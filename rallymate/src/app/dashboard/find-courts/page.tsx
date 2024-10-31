@@ -16,6 +16,7 @@ import {
 import { Court } from "@/app/lib/definitions";
 import SessionList from "@/app/dashboard/find-courts/session-list";
 import Image from "next/image";
+import { User } from "@/app/lib/definitions";
 
 export default function MapPage() {
   const [locations, setLocations] = useState<Court[]>([]);
@@ -82,7 +83,7 @@ function Marker({
 }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
-  const [currentPlayers, setCurrentPlayers] = useState([]);
+  const [currentPlayers, setCurrentPlayers] = useState<User[]>([]);
 
   const handleMarkerClick = (court: Court) => {
     setInfoWindowShown(!infoWindowShown);

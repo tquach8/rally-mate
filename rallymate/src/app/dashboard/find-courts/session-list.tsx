@@ -22,7 +22,7 @@ export default function SessionList({ court }: { court: Court }) {
     setSessionModalOpen(true);
   };
 
-  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormData) => {
     await createSession(event);
     setSessionModalOpen(false);
     fetchSessions();
