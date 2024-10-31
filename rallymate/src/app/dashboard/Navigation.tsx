@@ -28,7 +28,7 @@ export default function Navigation() {
         <Link className={`${activeLink("/dashboard/find-courts")}`} href="/dashboard/find-courts">
           <IoMapOutline className="w-8 h-6" />
         </Link>
-        <Link className={activeLink("/stats")} href="/stats">
+        <Link className={activeLink("/dashboard/tracker")} href="/dashboard/tracker">
           <IoTennisballOutline className="w-8 h-6" />
         </Link>
         <Link className={activeLink("/scheduling")} href="/scheduling">

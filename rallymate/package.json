@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.2.3",
+    "@tensorflow/tfjs": "^4.22.0",
     "@vercel/postgres": "^0.10.0",
     "@vis.gl/react-google-maps": "^1.4.0",
     "bcrypt": "^5.1.1",
     "jose": "^5.9.6",
     "next": "15.0.1",
+    "p5": "^1.11.0",
     "react": "18.3.1",
     "react-datepicker": "^7.5.0",
     "react-dom": "18.3.1",
