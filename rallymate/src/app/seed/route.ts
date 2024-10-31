@@ -1,3 +1,5 @@
+/* eslint-disable */
+  // @ts-nocheck 
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
 import {

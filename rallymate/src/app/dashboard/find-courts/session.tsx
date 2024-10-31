@@ -10,14 +10,17 @@ export default function Session({ session }: { session: CourtSession }) {
     2: "Doubles",
   }[session.type];
 
-  const [currentPlayers, setCurrentPlayers] = useState<User[] | []>(session.users);
+  const [currentPlayers, setCurrentPlayers] = useState<User[] | []>(
+    session.users,
+  );
   const user = useUser();
 
   const handleClick = async () => {
     await joinCourtSession(session);
-    setCurrentPlayers([...currentPlayers, user]);
+    if (user) {
+      setCurrentPlayers([...currentPlayers, user]);
+    }
   };
-
 
   return (
     <div className="p-2 flex flex-col gap-1">
@@ -46,12 +49,12 @@ export default function Session({ session }: { session: CourtSession }) {
           />
         ))}
       </div>
-      {currentPlayers.find((u) => u.id === user?.id) && (
+      {user && currentPlayers.find((u) => u.id === user["id"]) && (
         <button className="bg-red-200 rounded px-4 py-2" onClick={() => {}}>
           Leave
         </button>
       )}
-      {!currentPlayers.find((u) => u.id === user?.id) && (
+      {user && !currentPlayers.find((u) => u.id === user["id"]) && (
         <button className="bg-primary rounded px-4 py-2" onClick={handleClick}>
           Join
         </button>

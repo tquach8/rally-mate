@@ -4,7 +4,10 @@
 import { createContext, useContext, ReactNode } from "react";
 import { User } from "@/app/lib/definitions";
 
-export const UserContext = createContext(null);
+const initialUser = {
+  id: "1",
+} as User;
+export const UserContext = createContext(initialUser);
 
 export const useUser = () => useContext(UserContext);
 

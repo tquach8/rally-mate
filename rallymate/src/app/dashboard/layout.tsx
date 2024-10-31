@@ -12,11 +12,13 @@ export default async function Layout({
   return (
     <div className="h-screen bg-secondary-700 flex flex-col">
       <div className="h-full bg-tertiary-700 p-8 rounded-lg flex flex-col gap-4">
-        <UserProvider user={user}>
-          <Navigation />
+        {user && (
+          <UserProvider user={user}>
+            <Navigation />
 
-          <div className="h-full w-full">{children}</div>
-        </UserProvider>
+            <div className="h-full w-full">{children}</div>
+          </UserProvider>
+        )}
       </div>
     </div>
   );
