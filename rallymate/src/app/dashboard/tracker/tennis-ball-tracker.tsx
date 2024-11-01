@@ -199,22 +199,6 @@ const TennisBallTracker = () => {
     };
   }, []);
 
-  if (error) {
-    return (
-      <div className="w-[640px] h-[480px] flex items-center justify-center bg-gray-100 border border-gray-300 rounded-lg">
-        <div className="p-6 text-center">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div ref={sketchRef} className="relative w-[640px] h-[480px]">
       {(!hasPermission || modelLoading || !isVideoReady) && (
